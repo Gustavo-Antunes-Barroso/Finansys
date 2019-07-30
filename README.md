@@ -1,8 +1,8 @@
 # Finansys
 
--instal node latest
+-install node latest
 
--instal angular/cli latest
+-install angular/cli latest
 
 -run npm i
 
