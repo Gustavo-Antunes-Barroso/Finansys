@@ -7,7 +7,7 @@
       <a routerLink="/categories">Categorias</a>
     </li>
     <li class="breadcrumb-item active">
-      Fomulário de Categorias
+      {{pageTitle}}
     </li>
   </ol>
 </nav>
@@ -15,7 +15,7 @@
 <div class="row mb-4">
   <div class="col-md">
     <h1 class="h2 border-left pl-2">
-      Categorias
+      {{pageTitle}}
     </h1>
   </div>
   <div class="col-md">
@@ -25,7 +25,7 @@
   </div>
 </div>
 
-<form>
+<form [formGroup]="categoryForm" (submit)="submitForm()">
   <div class="card">
     <div class="card-header">
       Informações sobre a categoria
@@ -34,16 +34,20 @@
       <div class="form-row">
         <div class="form-goup col-md-4">
           <label for="name">Nome</label>
-          <input type="text" id="name" placeholder="Nome" class="form-control">
+          <input type="text" id="name" class="form-control" formControlName="name">
+          <div class="text-danger" *ngIf="categoryForm.get('name').invalid && categoryForm.get('name').touched">
+            <div *ngIf="categoryForm.get('name').errors.required">dado obrigatório</div>
+            <div *ngIf="categoryForm.get('name').errors.minlength">nome deve conter no mínimo 5 caracteres</div>
+          </div>
         </div>
         <div class="form-goup col-md-8">
           <label for="description">Descrição</label>
-          <input type="text" id="descripton" class="form-control">
+          <input type="text" id="descripton" class="form-control" formControlName="description">
         </div>
       </div>
     </div>
   </div>
-  <button type="submit" class="btn btn-primary btn-lg float-right mt-3">
+  <button [disabled]="submittingForm || categoryForm.invalid" type="submit" class="btn btn-primary btn-lg float-right mt-3">
     Salvar
   </button>
 </form>
